@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mock_data/mock_data.dart';
 
 void main() {
   return runApp(
@@ -15,25 +18,45 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 1;
+
+  void getRandomDice() {
+    setState(() {
+      leftDiceNumber = mockInteger(1, 6);
+      rightDiceNumber = mockInteger(1, 6);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: FlatButton(
-            onPressed: () => print('Left button got pressed'),
-            child: Image.asset('images/dice1.png'),
+    return Center(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                getRandomDice();
+              },
+              child: Image.asset('images/dice$leftDiceNumber.png'),
+            ),
           ),
-        ),
-        Expanded(
-          child: FlatButton(
-            onPressed: () => print('Right button got pressed'),
-            child: Image.asset('images/dice1.png'),
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                getRandomDice();
+              },
+              child: Image.asset('images/dice$rightDiceNumber.png'),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
